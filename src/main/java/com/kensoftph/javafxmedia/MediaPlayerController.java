@@ -5,10 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -51,6 +48,36 @@ public class MediaPlayerController {
     private Duration sliderDuration;
 
     @FXML
+    void onPress(KeyEvent ev) {
+        final KeyCombination keyComboCtrlC = new KeyCodeCombination(
+                KeyCode.C, KeyCombination.CONTROL_DOWN);
+        KeyCode kc = ev.getCode();
+        if (keyComboCtrlC.match(ev)) {
+            copyTime();
+        }
+        else if (kc == KeyCode.C) {
+            slider.setBlockIncrement(10);
+            slider.increment();
+            mediaPlayer.seek(Duration.seconds(slider.getValue()));
+        }
+        else if (kc == KeyCode.Z) {
+            slider.setBlockIncrement(5);
+            slider.decrement();
+            mediaPlayer.seek(Duration.seconds(slider.getValue()));
+        }
+        else if (kc == KeyCode.D) {
+            slider.setBlockIncrement(60);
+            slider.increment();
+            mediaPlayer.seek(Duration.seconds(slider.getValue()));
+        }
+        else if (kc == KeyCode.A) {
+            slider.setBlockIncrement(30);
+            slider.decrement();
+            mediaPlayer.seek(Duration.seconds(slider.getValue()));
+        }
+    }
+
+    @FXML
     void btnPlay(MouseEvent event) {
         if(!isPlayed){
             btnPlay.setText("Pause");
@@ -81,10 +108,15 @@ public class MediaPlayerController {
         String url = db.getFiles().get(0).toURI().toString();
         fileNameLabel.setText(url);
 
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+
         media = new Media(url);
         mediaPlayer = new MediaPlayer(media);
 
         mediaView.setMediaPlayer(mediaPlayer);
+        slider.setValue(0);
 
         mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
             sliderDuration = newValue;
@@ -116,6 +148,10 @@ public class MediaPlayerController {
 
     @FXML
     void copyTime(MouseEvent event) {
+        copyTime();
+    }
+
+    private void copyTime() {
         String theTime = String.valueOf(formatDurationAsInt(sliderDuration));
         System.out.println("CopyTime: " + theTime);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

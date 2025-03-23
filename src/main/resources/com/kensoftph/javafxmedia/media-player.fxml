@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kensoftph.javafxmedia.MediaPlayerController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onPress" prefHeight="1200.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kensoftph.javafxmedia.MediaPlayerController">
    <center>
       <MediaView fx:id="mediaView" fitHeight="1060.0" fitWidth="1630.0" onDragDropped="#fileDragDropped" onDragOver="#fileDragOver" BorderPane.alignment="BOTTOM_CENTER" />
    </center>

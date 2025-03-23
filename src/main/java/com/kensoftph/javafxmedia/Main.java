@@ -15,7 +15,6 @@ public class Main extends Application {
         stage.setTitle("JavaFX MediaPlayer!");
         stage.setScene(scene);
         stage.show();
-        stage.setAlwaysOnTop(true);
     }
 
     public static void main(String[] args) {
